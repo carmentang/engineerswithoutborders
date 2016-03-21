@@ -1,6 +1,13 @@
 <h1>Editing Volunteer</h1>
 
-<%= render 'form' %>
+<%= form_for @volunteer do |v| %>
+  First Name: <%= v.text_field :first_name %>
+  Last Name: <%= v.text_field :last_name %>
+  Phone: <%= v.text_field :phone %>
+  Email: <%= v.text_field :email %>
+  City: <%= v.text_field :city %>
+  <%= v.submit %>
+<% end %>
 
 <%= link_to 'Show', @volunteer %> |
 <%= link_to 'Back', volunteers_path %>
