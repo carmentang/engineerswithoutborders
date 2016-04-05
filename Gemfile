@@ -38,9 +38,12 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
  
+  #If you plan to use JavaScript/CoffeeScript
   gem 'selenium-webdriver' 
-  # If you plan to use JavaScript/CoffeeScript
-  # gem 'jasmine-rails'
+
+  #Enable chrome webdriver for cucumber
+  gem "chromedriver-helper"
+
 end
 
 group :development do
