@@ -1,5 +1,6 @@
 <h1>New Volunteer</h1>
 
+
 <% if flash[:notice] %>
     <div class="notice", style: "color: red;"><%= flash[:notice] %></div>
 <% end %>
@@ -22,8 +23,6 @@
   </div><br>
 
   <%= v.submit %><br>
-<% end %>
-
 
 <script>
   var joinTeamCheckbox = document.getElementById("volunteer_join_project_team");
@@ -33,9 +32,14 @@
       joinTeamDetails.style['display'] = 'block';
     } else {
       joinTeamDetails.style['display'] = 'none';
-    }
+    } 
   }
 </script>
 
+
+
+
+
+<% end %>
     
 <%= link_to 'Back', volunteers_path %>
