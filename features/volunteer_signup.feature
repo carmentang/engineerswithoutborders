@@ -26,7 +26,7 @@ Scenario: Filling out the Volunteer Form by joining project team
   And I fill in "City" with "Berkeley"
   And I check "Join project team"
   Then the detailed project information should be revealed
-  And I should see "Join Project Team"
+  And I should see "Join project team"
   And I select "Student" from "Status"
   And I select "Bachelors" from "Education"
   And I fill in "Major" with "Computer Science"
