@@ -20,7 +20,7 @@ class VolunteersController < ApplicationController
       @selected_major = params[:major]    
       
       if @selected_status != "Select" 
-        @volunteers = Volunteer.where(status: @selected_status)
+        @volunteers = Volunteer.where(nil, status: @selected_status)
       elsif @selected_states != "Select"
         @volunteers = Volunteer.where(state: @selected_states)
       elsif @selected_education != "Select"
