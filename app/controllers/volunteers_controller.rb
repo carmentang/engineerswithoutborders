@@ -9,7 +9,7 @@ class VolunteersController < ApplicationController
     if logged_in?
       
       @all_groups = Volunteer.groups
-      @selected_groups = params[:group]
+      @selected_group = params[:group]
       
       @all_status = Volunteer.all_status
       @selected_status = params[:status] 
@@ -21,7 +21,6 @@ class VolunteersController < ApplicationController
       @selected_education = params[:education]
             
       @selected_major = params[:major]    
-      
       if @selected_group != "Unassigned"
         @volunteers = Volunteer.where(group: @selected_group)
       elsif @selected_status != "Select" 
@@ -36,7 +35,7 @@ class VolunteersController < ApplicationController
         if @selected_major != nil
           @wildcard_major = Volunteer.where("major LIKE (?)", "%#{@selected_major}%")
         end
-        @volunteers = Volunteer.where(status: @selected_status, state: @selected_states, education: @selected_education, major: @wildcard_major)
+        @volunteers = Volunteer.where(group: @selected_group, status: @selected_status, state: @selected_states, education: @selected_education, major: @wildcard_major)
       end
     else
       redirect_to login_path
