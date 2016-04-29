@@ -3,6 +3,8 @@
 <h1 >Listing Volunteers</h1>
 
 <%= form_tag volunteers_path, :id => 'filter_form', :method => :get do %>
+  Teams:
+  <%= select_tag "group", options_for_select(@all_groups, @all_groups[0]), :id => "group_id" %>
   Status:
   <%= select_tag "status", options_for_select(@all_status, @all_status[0]), :id => "status_id" %>
   States:

@@ -8,6 +8,9 @@ class VolunteersController < ApplicationController
   def index
     if logged_in?
       
+      @all_groups = Volunteer.groups
+      @selected_groups = params[:group]
+      
       @all_status = Volunteer.all_status
       @selected_status = params[:status] 
       
@@ -19,8 +22,10 @@ class VolunteersController < ApplicationController
             
       @selected_major = params[:major]    
       
-      if @selected_status != "Select" 
-        @volunteers = Volunteer.where(nil, status: @selected_status)
+      if @selected_group != "Unassigned"
+        @volunteers = Volunteer.where(group: @selected_group)
+      elsif @selected_status != "Select" 
+        @volunteers = Volunteer.where(status: @selected_status)
       elsif @selected_states != "Select"
         @volunteers = Volunteer.where(state: @selected_states)
       elsif @selected_education != "Select"
