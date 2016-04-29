@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     if @user.email.empty? or ((@user.email.upcase =~ /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/) != 0)
       flash[:error] = "Invalid email address."
       render 'new'
-    elsif @user.password.length < 4
+    elsif @user.password.nil? or @user.password.length < 4
       flash[:error] = "Your password must at least be 4 letters."
       render 'new'
     else
