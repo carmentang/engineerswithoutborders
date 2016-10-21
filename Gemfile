@@ -4,8 +4,9 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
+gem 'sprockets-rails', :require => 'sprockets/railtie'
 # Boostrap for styling
-gem 'bootstrap-sass',       '3.2.0.0'
+gem 'bootstrap', '~> 4.0.0.alpha4'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -18,6 +19,10 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'jquery-turbolinks'
 gem 'bcrypt', '~> 3.1.7'
+gem 'cancancan', '~> 1.10'
+gem 'simple_form'
+gem 'devise'
+gem 'rails-assets-tether', '>= 1.1.0'
 
 group :development, :test do
   gem 'sqlite3'

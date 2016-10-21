@@ -18,7 +18,7 @@ Given /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
     end
   end
 
-And /^I am log in as an admin$/ do
+And /^I am logged in as an admin$/ do
 
     @user = User.new(name: 'admin',
                      email: 'test@test.com',
@@ -31,6 +31,15 @@ And /^I am log in as an admin$/ do
     step 'I fill in "Password" with "password!"'
     step 'I press "Log in"'
 end
+
+You can implement step definitions for undefined steps with these snippets:
+
+Given(/^I am a project manager$/) do
+
+  pending # Write code here that turns the phrase above into concrete actions
+
+end
+
 
 
 And /^I click first edit$/ do

@@ -1,16 +1,14 @@
 Rails.application.routes.draw do
-  get 'sessions/new'
-  get 'sessions/new'
-  get 'session/new'
-  root 'volunteers#start'
+  devise_for :users
+  get 'welcome/index' => 'welcome#index'
+
+  root 'welcome#index'
   
-  resources :volunteers
   resources :users
   
-  get 'teams' => 'volunteers#teams'
   get 'signup' => 'users#new'
-  get 'show' => 'volunteers#show'
-  get 'volunteers' => 'volunteers'
+  get 'show' => 'users#show'
+  get 'users' => 'users'
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
