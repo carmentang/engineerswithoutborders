@@ -1,6 +1,6 @@
 language: ruby
 rvm:
-  - 2.2.2
+  - 2.2.2 # may need to update this
 
 before_script:
   - psql -c "CREATE USER sfewb WITH PASSWORD 'cs169';" -U postgres
