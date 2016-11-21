@@ -1,0 +1,15 @@
+<h1>Listing Events</h1>
+
+<hr>
+<ul>
+<% @events.each do |event| %>
+<li>
+  <h4><a href="<%= event_path(event.id) %>" ><%= event.name %></a></h4>
+  <p><%= event.description %><p>
+  </p>
+  </p>
+ </li>
+<% end %>
+<ul>
+
+<%= paginate @events %>

@@ -1,0 +1,82 @@
+<style>
+	h1{
+        font: bold 34px "Century Schoolbook", Georgia, Times, serif;
+		color: #333;
+		letter-spacing: -2px;
+		display:inline-block;
+		margin-right:590px;
+	}
+	.right{
+		position:absolute;
+		display:inline-block;
+		top:70px;
+	}
+	h2, h3, h4, h5, h6 {
+    font-family: 'Corben', Georgia, Times, serif;
+	}
+	p, div {
+	    font-family: 'Nobile', Helvetica, Arial, sans-serif;
+	}
+	.col-md-6{
+		position:absolute;
+		display:inline-block;
+	}
+</style>
+
+<h1>Project <%= @project.name %> </h1>
+<div class="right">
+<%= link_to "Create Another Event", new_event_path, class: "btn btn-md btn-success" %>
+<% if can? :manage, @project %>
+	  <%= link_to 'Edit Project', edit_project_path(@project), class: "btn btn-md btn-primary" %>
+    <%= link_to 'Home', root_path, class: "btn btn-md btn-primary" %>
+<% else %>
+    <%= link_to 'Home', root_path, class: "btn btn-md btn-primary" %>
+<% end %>
+</div>
+
+<script async defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<%= javascript_include_tag "application" %>
+
+
+<div class="image">
+
+  <% if @project.image_file_name != nil %>
+	  <%= image_tag @project.image.url(:medium) %> <br><br>
+  <% end %>
+ </div>
+
+
+	<div class="col-lg-12">
+		<p><strong>Project Description: </strong><%= @project.description %></p>
+	</div>
+	
+	<div class="col-lg-12">
+		<p>This project will start on <%= @project.start_date.to_date %>.</p>
+	</div>
+	
+	<div class="col-md-12">
+		<strong>Location: </strong>
+		<%= @project.location %>
+	</div>
+	<div class="col-md-12">
+		<p> <strong>Project</strong> <%= @project.name %> Has <strong><%= @project.volunteers %></strong> volunteers, needs <strong><%= @project.volunteer_capacity - @project.volunteers %></strong> more!</p>
+	</div>
+	<p style="page-break-before: always"></p>
+	<h2>Upcoming Events</h2>
+	<div class="col-lg-12">
+	    <ul>
+	        <% @all_events.each do |event| %>
+	        	<% if event.project_id == @project.id %>
+	        		<li><%= link_to event.name, event %>
+						<ul><strong>Date: </strong><%= @project.start_date.to_date %></ul>
+	        			<ul><strong>Location: </strong><%= event.location %></ul>
+	        			
+	        		</li>
+	        	<% end %>
+	        <% end %>	
+	    </ul>
+	</div>
+</div>
+<div>
+<br>
+<br>

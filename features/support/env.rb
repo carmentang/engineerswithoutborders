@@ -8,12 +8,6 @@ SimpleCov.start
 
 
 require 'cucumber/rails'
-require 'headless'
-
-
-headless = Headless.new
-headless.start
-
 
 # Capybara defaults to CSS3 selectors rather than XPath.
 # If you'd prefer to use XPath, just uncomment this line and adjust any
@@ -44,8 +38,6 @@ begin
 rescue NameError
   raise "You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it."
 end
-
-Capybara.javascript_driver = :selenium
 
 # You may also want to configure DatabaseCleaner to use different strategies for certain features and scenarios.
 # See the DatabaseCleaner documentation for details. Example:

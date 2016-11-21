@@ -1,29 +1,23 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Listing Users</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<hr>
+<% @users.each do |user| %>
+  <div class="row">
+    <div class="col-md-7">
+    <a href=<%= user_path(user) %>><strong><%= user.first_name %> <%= user.last_name %></strong></a> <br>
+    <strong>Age:</strong> <%= user.age %> 
+    <strong>Education:</strong> <%= user.education %> from <%= user.school %>
+    <strong> Field: </strong> <%= user.expertise %><br>
+    <strong>Availability: </strong><%= user.availability %> <br>
+    </div>
+    <div class="col-md-2">
+    <button type="button" class="btn btn-primary btn-sm btn-block">Contact</button>
+    <button type="button" class="btn btn-info btn-sm btn-block">Add to Shortlist</button>
+    <button type="button" class="btn btn-success btn-sm btn-block">Invite to Project</button>
+    </div>
+  </div>
+  <hr>
+<% end %>
 
-<br>
-
-<%= link_to 'New User', new_user_path %>
+<%= paginate @users %>

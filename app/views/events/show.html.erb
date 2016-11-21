@@ -1,0 +1,32 @@
+<h2>Event Information</h2>
+
+<p></p>
+
+<div class="row">
+	<div class="col-lg-12">
+		<h4><%= @event.name %></h4>
+	</div>
+	<div class="col-lg-12">
+		<p><%= @event.description %></p>
+	</div>
+	<div class="col-lg-12">
+		<p>This event will start on <%= @event.start_time.to_date %>.</p>
+	</div>
+	
+	<div class="col-md-6">
+		<strong>Location: </strong>
+		<%= @event.location %>
+	</div>
+</div>
+
+<p></p>
+
+<% if can? :manage, @project %>
+    <%= link_to 'Edit Event', edit_event_path(@event), class: "btn btn-md btn-primary" %> |
+    <%= link_to 'Home', root_path, class: "btn btn-md btn-primary" %>
+<% else %>
+    <%= link_to 'Home', root_path, class: "btn btn-md btn-primary" %>
+<% end %>
+
+<br>
+<br>

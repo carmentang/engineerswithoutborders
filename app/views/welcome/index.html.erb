@@ -1,0 +1,21 @@
+<% if not user_signed_in? %>
+	<h3>Welcome to the Engineers Without Borders SF Volunteer System!</h3>
+	<p>
+	If you would like to register as a volunteer, please click below!
+	<p>
+	<%= link_to "Sign up now!", new_user_registration_path, class: "btn btn-md btn-primary" %>
+<% elsif not current_user.complete %>
+	<h3>Your account has been created!</h3>
+	<p>
+	However, before we can effectively match you to projects, we need to know a little more information about you. Please take a couple minutes to complete your newly created profile with some background information.
+	<p>
+	<%= link_to "Update Your Profile", edit_user_path(current_user), class: "btn btn-md btn-danger" %>
+<% else %>
+	<h3>You're all set!</h3>
+	<p>
+	Thank you for your time completing this application, and your interest in volunteering. We will be in touch with you soon.
+	</p>
+	<p>
+	In the meantime, if you want to make changes to your profile you can update it at any time.
+	</p>
+<% end %>

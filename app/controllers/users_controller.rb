@@ -1,83 +1,83 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action only: [:show, :edit, :update, :age_sorting]
+  
+  autocomplete :user, :school
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to main_app.root_url, :alert => exception.message
+  end
 
-  # GET /users
-  # GET /users.json
   def index
     @users = User.all
-  end
-
-  # GET /users/1
-  # GET /users/1.json
-  def show
-    @user = User.find(params[:id])
-  end
-
-  # GET /users/new
-  def new
-    @user = User.new
-  end
-
-  # GET /users/1/edit
-  def edit
-  end
-
-  # POST /users
-  # POST /users.json
-  def create
-    # if @user.name.empty?
-    #   flash[:notice]
-    @user = User.new(user_params)
-    if @user.email.empty? or ((@user.email.upcase =~ /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/) != 0)
-      flash[:error] = "Invalid email address."
-      render 'new'
-    elsif @user.password.length < 4
-      flash[:error] = "Your password must at least be 4 letters."
-      render 'new'
-    else
-      if @user.save
-        flash[:notice] = "Success!"
-        redirect_to @user
-      else
-        render 'new'
-      end
-    end
+    authorize! :read, @users
+    @users = @users.page(params[:page]).per(3)
+    @users = @users.order(age: :desc)
+    
   end
   
+  def age_sorting
+    @users = @users.order(age: :desc)
+  end
+  
+  def show
+    @user = User.find(params[:id])
+    authorize! :read, @user
+  end
+  
+  # GET /users/1/edit
+  def edit
+    @user = User.find(params[:id])
+    @education_choices = ["GED", "College Student", "Bachelor's Degree", "Master's Degree", "Doctorate Degree"]
+    @proficiency_choices = ["1 - Elementary Proficiency, 2 - Limited Working Proficiency, 3 - Minimum Professional Proficiency, 4 - Full Professional Proficiency, 5 - Native or Bilingual Proficiency"]
+    @availability_choices = ["Not Available", "Morning", "Afternoon", "Evening", "Any Time"]
+    @time_commitment_choices = ["1-3 hours every month", "1-3 hours every week", "More than 3 hours per week"]
+    authorize! :manage, @user
+  end
 
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
+    if not params[:id]
+      redirect_to root_path
+    end
+    user = User.find(params[:id])
+    # update fields
+    user.first_name = user_params[:first_name]
+    user.last_name = user_params[:last_name]
+    user.age = user_params[:age]
+    user.education = user_params[:education]
+    user.school = user_params[:school]
+    user.expertise = user_params[:expertise]
+    user.description = user_params[:description]
+    user.availability = user_params[:availability]
+    user.save
+    
+    # update complete flag
+    if not user.complete
+      all_fields_filled = true
+      user_params.each do |k, v|
+        if v.blank?
+          all_fields_filled = false
+        end
+      end
+      if all_fields_filled 
+        user.complete = true
+        user.save
       else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        flash[:warning] = "Some profile information is still missing. Please fill out the missing fields so that we can determine the best projects for you!"
+      end
+
+      if not flash[:warning]
+        flash[:notice] = "Profile was successfully updated."
       end
     end
-  end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
-  def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to user_path(params[:id])
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation)
-    end
+  def user_params
+    # this simply makes it easier to access params[:user_params[:param]]
+    params.require(:user)
+  end    
 end

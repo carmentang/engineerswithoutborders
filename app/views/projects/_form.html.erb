@@ -1,0 +1,16 @@
+<%= simple_form_for(@project) do |f| %>
+    <%= f.input :name %>
+    <%= f.input :description %>
+    <%= f.label :Start_Date %>:
+    <%= f.label :Start_Date %>:
+    <%= f.datetime_select :start_date, { :include_blank => false } %>
+    <%= f.input :volunteer_capacity %>
+    <%= f.input :volunteers %>
+    <%= f.input :location %>
+    <%= f.label :Time_Commitment %><br>
+    <%= f.input :hours_per_week %>
+    
+    <%= f.label :image %><br>
+    <%= f.file_field :image %><br><br>
+    <%= f.button :submit, class: "btn btn-md btn-success" %><br><br>
+<% end %>

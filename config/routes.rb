@@ -1,19 +1,22 @@
 Rails.application.routes.draw do
-  get 'sessions/new'
-  get 'sessions/new'
-  get 'session/new'
-  root 'volunteers#start'
   
-  resources :volunteers
-  resources :users
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  # USER ROUTES
+  devise_for :users
+  # suggested from http://stackoverflow.com/questions/10900664/rails-devise-how-can-i-edit-user-information
+  resources :users, only: [:index, :show, :edit, :update]
+  resources :projects, only: [:index, :show, :new, :create, :edit, :update]
+  resources :events, only: [:index, :show, :new, :create, :edit, :update]
+  resources :users do
+    get :autocomplete_user_school, :on => :collection
+    
+end
+  # WELCOME ROUTES
+  get 'welcome/index' => 'welcome#index'
+  root to: 'welcome#index'
   
-  get 'teams' => 'volunteers#teams'
-  get 'signup' => 'users#new'
-  get 'show' => 'volunteers#show'
-  get 'volunteers' => 'volunteers'
-  get    'login'   => 'sessions#new'
-  post   'login'   => 'sessions#create'
-  delete 'logout'  => 'sessions#destroy'
+
+
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
